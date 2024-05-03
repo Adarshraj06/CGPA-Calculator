@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA Calculator</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+
+    <style>
+        /* Custom styles for header */
+        header {
+            background-color: #e7e9cc; /* Light gray background */
+            border-bottom: 1px solid #ccc; /* Add a border at the bottom */
+        }
+
+        /* Custom styles for body */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #bca7e6; /* Light background */
+        }
+
+        /* Styles for the form container */
+        #cgpaForm {
+            background-color: #ffffff; /* White background */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
+            margin-top: 20px;
+        }
+
+        /* Styles for assessment inputs */
+        .assessment {
+            margin-bottom: 10px;
+            margin-right: 10px;
+        }
+
+        /* Styles for labels and inputs */
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 100%; /* Make inputs full width */
+        }
+
+        /* Styles for buttons */
+        button {
+            background-color: #4a90e2; /* Blue background */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+
+        /* Hover effect for buttons */
+        button:hover {
+            background-color: #357abd; /* Darker blue on hover */
+        }
+
+        /* Styles for the result div */
+        #result {
+            
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333; /* Dark text color */
+        }
+        /* Styles for the footer div */
+#footer {
+    position: fixed; /* Fixed position to keep the div in the same place */
+    bottom: 0; /* Align the div to the bottom */
+    right: 0; /* Align the div to the right */
+    padding: 10px; /* Add some padding */
+    color: gray; /* Set text color to gray */
+}
+
+    </style>
+</head>
+
+<body>
+    <header class="text-gray-600 body-font">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+            <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="index.html">
+                <img src="logo.png" alt="Please Reload" height="100" width="100">
+                <span class="ml-3 text-xl">CGPA Calculator</span>
+            </a>
+            <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+                <a href="index.html" class="mr-5 hover:text-gray-900">Home</a>
+                <a href="/" class="mr-5 hover:text-gray-900">About</a>
+                <a href="/" class="mr-5 hover:text-gray-900">Services</a>
+                <a href="/" class="mr-5 hover:text-gray-900">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-4">CGPA Calculator</h1>
+
+    <!-- Form to input assessments -->
+    <form id="cgpaForm">
+        <div id="assessments">
+            <!-- Initial assessment input -->
+            <div class="assessment">
+                <label for="grade1">Grade of subject 1:</label>
+                <input type="text" id="grade1" name="grade1" required>
+
+                <label for="credit1">Credit of subject 1:</label>
+                <input type="number" id="credit1" name="credit1" required min="0" step="1">
+            </div>
+        </div>
+        <!-- Button to add more assessments -->
+        <button type="button" onclick="addAssessment()">Add Assessment</button>
+        <br>
+        <!-- Button to calculate CGPA -->
+        <button type="button" onclick="calculateCGPA()">Calculate CGPA</button>
+    </form>
+
+    <!-- Div to display the result -->
+    <div id="result"></div>
+    <div id="footer" class="fixed bottom-0 right-0 p-4 text-gray-600">
+        Created by <span style="color: antiquewhite;"> Adarsh Raj 😊</span>
+    </div>
+    <script>
+        // JavaScript code to handle adding assessments and calculating CGPA
+        let assessmentCount = 1;
+
+        // Function to add more assessments
+        function addAssessment() {
+            assessmentCount++;
+            const assessmentsDiv = document.getElementById("assessments");
+            const newAssessmentDiv = document.createElement("div");
+            newAssessmentDiv.className = "assessment";
+            newAssessmentDiv.innerHTML = `
+                <label for="grade${assessmentCount}">Grade for subject ${assessmentCount}:</label>
+                <input type="text" id="grade${assessmentCount}" name="grade${assessmentCount}" required>
+                
+                <label for="credit${assessmentCount}">Credit for subject ${assessmentCount}:</label>
+                <input type="number" id="credit${assessmentCount}" name="credit${assessmentCount}" required min="0" step="1">
+            `;
+            assessmentsDiv.appendChild(newAssessmentDiv);
+        }
+
+        // Function to calculate CGPA
+        function calculateCGPA() {
+            let totalWeightedScore = 0;
+            let totalWeight = 0;
+
+            // Loop through each assessment and calculate weighted scores and total weight
+            for (let i = 1; i <= assessmentCount; i++) {
+                const grade = document.getElementById(`grade${i}`).value.toUpperCase().trim();
+                const credit = parseFloat(document.getElementById(`credit${i}`).value);
+
+                let points = 0;
+
+                // Calculate points based on grade and credit
+                switch (grade) {
+                    case "O":
+                        points = 10 * credit;
+                        break;
+                    case "A":
+                        points = 9 * credit;
+                        break;
+                    case "A+":
+                        points = 8 * credit;
+                        break;
+                    case "B":
+                        points = 7 * credit;
+                        break;
+                    case "B+":
+                        points = 6 * credit;
+                        break;
+                    case "C":
+                        points = 5 * credit;
+                        break;
+                    case "D":
+                        points = 4 * credit;
+                        break;
+                    case "E":
+                        points = 0 * credit;
+                        break;
+                    default:
+                        document.getElementById("result").innerHTML = `Invalid grade '${grade}' entered. Please use grades O, A, A+, B, B+, C, D, or E.`;
+                        return;
+                }
+
+                // Accumulate total weighted score and total weight
+                totalWeightedScore += points;
+                totalWeight += credit;
+            }
+
+            // Calculate CGPA and display the result
+            if (totalWeight > 0) {
+                const cgpa = totalWeightedScore / totalWeight;
+                document.getElementById("result").innerHTML = `CGPA: ${cgpa.toFixed(2)}`;
+            } else {
+                document.getElementById("result").innerHTML = "Total weight is zero; cannot calculate CGPA.";
+            }
+        }
+    </script>
+</body>
+
+</html>
