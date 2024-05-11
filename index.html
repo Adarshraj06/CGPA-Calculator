@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CGPA Calculator</title>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 
     <style>
         /* Custom styles for header */
@@ -83,6 +84,7 @@
 }
 
     </style>
+    
 </head>
 
 <body>
@@ -125,9 +127,29 @@
 
     <!-- Div to display the result -->
     <div id="result"></div>
-    <div id="footer" class="fixed bottom-0 right-0 p-4 text-gray-600">
+    <!-- <div id="footer" class="fixed bottom-0 right-0 p-4 text-gray-600">
         Created by <span style="color: antiquewhite;"> Adarsh Raj 😊</span>
-    </div>
+    </div> -->
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2024 CGPA Calculator All rights reserved.</p>
+            <nav>
+                <ul>
+                    <li>
+                        Created by <span style="color: antiquewhite;"> Adarsh Raj 😊</span>
+                    </li>
+                </ul>
+            </nav>
+            <!-- <nav>
+                <ul>
+                    <li><a href="/privacy-policy">Privacy Policy</a></li>
+                    <li><a href="/terms-of-service">Terms of Service</a></li>
+                    <li><a href="/contact">Contact Us</a></li>
+                </ul>
+            </nav> -->
+        </div>
+    </footer>
+    
     <script>
         // JavaScript code to handle adding assessments and calculating CGPA
         let assessmentCount = 1;
@@ -139,10 +161,10 @@
             const newAssessmentDiv = document.createElement("div");
             newAssessmentDiv.className = "assessment";
             newAssessmentDiv.innerHTML = `
-                <label for="grade${assessmentCount}">Grade of subject ${assessmentCount}:</label>
+                <label for="grade${assessmentCount}">Grade for subject ${assessmentCount}:</label>
                 <input type="text" id="grade${assessmentCount}" name="grade${assessmentCount}" required>
                 
-                <label for="credit${assessmentCount}">Credit of subject ${assessmentCount}:</label>
+                <label for="credit${assessmentCount}">Credit for subject ${assessmentCount}:</label>
                 <input type="number" id="credit${assessmentCount}" name="credit${assessmentCount}" required min="0" step="1">
             `;
             assessmentsDiv.appendChild(newAssessmentDiv);
